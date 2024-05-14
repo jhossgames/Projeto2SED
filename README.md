@@ -4,7 +4,7 @@
 
 Este projeto busca desenvolver um sistema de onda verde de semáforos gerencie o fluxo de veículos, minimizando o tempo de espera e evitando congestionamentos no software UPPAAL, uma ferramenta para modelagem e análise de funções de controle de eventos discretos com base em modelos baseados em tempo. Como prioridade fundamental, o sistema foi pensado para garantir que , no trecho simulado, o usuário pare no máximo uma vez. 
 
-![Visão Geral]((https://github.com/jhossgames/Projeto2SED/blob/main/Imagens/sistema%20geral.png?raw=true))
+![Visão Geral](https://github.com/jhossgames/Projeto2SED/blob/main/Imagens/sistema%20geral.png?raw=true)
 
 ## Funcionalidades
 
@@ -14,7 +14,7 @@ Este projeto busca desenvolver um sistema de onda verde de semáforos gerencie o
 
 ## Topologia do Cruzamento
 
-![Topologia do Cruzamento]((https://github.com/jhossgames/Projeto2SED/blob/main/Imagens/Grafico.png?raw=true))
+![Topologia do Cruzamento](https://github.com/jhossgames/Projeto2SED/blob/main/Imagens/Grafico.png?raw=true)
 
   Para modelagem do sistema, primeiramente foi desenvolvido o diagrama acima, relacionamos os estados de cada semáforo independente com os estados, a fim de minimizar erros durante o desenvolvimento. Para o sincronismo do sistema foi utilizado o método gráfico descrito no Manual Brasileiro de Sinalização de Trânsito - Volume V. No qual apresenta como determinar os tempos e os ajustes para uma via de mão única. Na ausência de uma ferramenta para desenvolvimento específico do gráfico descrito acima, optou-se por desenvolvêlo em um software CAD, com as devidas adaptações.
   Analisando o gráfico, podemos ver que os semáforos 2 e 4, 1 e 3 correspondem aos mesmos estados em função do tempo. Além disso, observa-se também que tanto o carro que chegará ao semáforo assim que o mesmo abrir cumprirá todo o percurso sem paradas. Também podemos ver que o mesmo fenômeno acontece para o veículo que chega ao final do sinal verde e início do amarelo, ao manter a velocidade de 40 km/h da via é observada a onda verde.
@@ -35,10 +35,10 @@ Este projeto busca desenvolver um sistema de onda verde de semáforos gerencie o
  Com a topologia e os eventos definidos podemos utilizar o software UPPAAL para construção dos autômatos de acordo com o funcionamento estabelecido. Criado um novo projeto e adicionando os eventos, podemos criar as 4 templates necessários. Assim temos: 
  
  Autômato do semáforo 1 e 3:
- ![automato S1]((https://github.com/jhossgames/Projeto2SED/blob/main/Imagens/S1.png?raw=true))
+ ![automato S1](https://github.com/jhossgames/Projeto2SED/blob/main/Imagens/S1.png?raw=true)
  
  Autômato do semáforo 2 e 4:
- ![automato S2](https://raw.githubusercontent.com/jhossgames/Projeto2SED/main/Imagens/S2.png)
+ ![automato S2](https://github.com/jhossgames/Projeto2SED/blob/main/Imagens/S2.png?raw=true)
  
  Controlador dos semáforos:
   ![Controlador dos semáforos](https://github.com/jhossgames/Projeto2SED/blob/main/Imagens/controlador.png?raw=true)
