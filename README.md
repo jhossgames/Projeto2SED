@@ -81,7 +81,7 @@ Assim, obtemos o seguinte resultado:
   [![Veja a simulação](https://i.imgur.com/XllV2DE.png)](https://youtu.be/PTcpO7ibb0Y)
 
 ## Conclusão
-  Podemos concluir que a construção do sistema para o controle de um uma via de 4 semáforos através do software UPPAAL, foi concluido com sucesso. Permitindo o tráfego seguro e eficiente para os usuários que precisam passar por esse trecho todod os dias.
+  Podemos concluir que a construção do sistema para o controle de um uma via de 4 semáforos através do software UPPAAL, foi concluido com sucesso. Permitindo o tráfego seguro e eficiente para os usuários que precisam passar por esse trecho todos os dias.
 ## Licença
 
 Este projeto está licenciado sob a [Licença MIT](LICENSE). Consulte o arquivo `LICENSE` para obter detalhes.
