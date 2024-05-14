@@ -78,7 +78,7 @@ Assim, obtemos o seguinte resultado:
   Para a simulação, basta abrir o arquivo ZZZ no software UPPAAL, caso seu usuário do sistem operacional tenha carateres do UNICODE, você deve baixar a versão BETA do software.
   Para visualizar a simulação do sistema:
 
-  [![Veja a simulação](https://i.imgur.com/XllV2DE.png)](https://youtu.be/ni8EY2Vam8o)
+  [![Veja a simulação](https://i.imgur.com/XllV2DE.png)](https://youtu.be/PTcpO7ibb0Y)
 
 ## Conclusão
   Podemos concluir que a construção do sistema para o controle de um uma via de 4 semáforos através do software UPPAAL, foi concluido com sucesso. Permitindo o tráfego seguro e eficiente para os usuários que precisam passar por esse trecho todod os dias.
