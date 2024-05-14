@@ -1,76 +1,84 @@
-# Projeto Cruzamento de Carros e Pedestres
+# Projeto Sincronização de semáforos (Onda Verde)
 
 ## Descrição
 
-Este projeto busca desenvolver um sistema de controle de tráfego eficiente que gerencie o fluxo de pedestres e veículos, minimizando o tempo de espera e evitando congestionamentos no software SUPREMICA, uma ferramenta para modelagem e análise de funções de controle de eventos discretos com base em modelos. Como prioridade fundamental, o sistema foi pensado para garantir a segurança de todos os usuários. 
+Este projeto busca desenvolver um sistema de onda verde de semáforos gerencie o fluxo de veículos, minimizando o tempo de espera e evitando congestionamentos no software UPPAAL, uma ferramenta para modelagem e análise de funções de controle de eventos discretos com base em modelos baseados em tempo. Como prioridade fundamental, o sistema foi pensado para garantir que , no trecho simulado, o usuário pare no máximo uma vez. 
 
 ![Visão Geral](https://github.com/jhossgames/Projeto1SED/blob/main/Imagens/INICIO.png?raw=true)
 
 ## Funcionalidades
 
-- Controle de dois semáforos para carros e dois semáforos para pedestres.
-- Sincronismo no sistema entre os semáforos para evitar comportamentos proibidos, como ambos os semáforos ficarem verdes simultaneamente ou um semáforo de carros e um de pedestres ficarem verdes ao mesmo tempo.
-- Lógica para permitir que um pedestre possa acionar um botão para fechar o semáforo de carros mais rapidamente, mudando-o de verde para amarelo e prolongando o tempo de fechamento caso já esteja fechado.
+- Controle de quatro semáforos de veículos.
+- Sincronismo no sistema entre os semáforos para evitar paradas excessivas.
+- Modelagem da via, onde o carro pode percorrer o trecho e chegar ao final do trajeto.
 
 ## Topologia do Cruzamento
 
 ![Topologia do Cruzamento](https://i.imgur.com/49DzwJG.png)
 
-  Para modelagem do sistema, primeiramente foi desenvolvido o diagrama acima, relacionamos os estados de cada semáforo independente com os estados esperados de seus pares, a fim de minimizar erros durante o desenvolvimento. 
-  Podemos perceber que nunca dois semáforos estarão permitindo a passagem de fluxo ao mesmo tempo. Assim, temos os seguintes eventos controláveis no sistema:
-  - Estágio 1-2: Liberação dos veículos do semáforo 2, Semáforo pedestre 1 liberado;
-  - Estágio 2-3: Alerta para os veículos do semáforo 2, preparação para liberação do semáforo 1;
-  - Estágio 3-4: Liberação dos veículos do semáforo 1, Semáforo pedestre 2 liberado;
-  - Estágio 4-1: Alerta para os veículos do semáforo 2, preparação para liberação do semáforo 1.
+  Para modelagem do sistema, primeiramente foi desenvolvido o diagrama acima, relacionamos os estados de cada semáforo independente com os estados, a fim de minimizar erros durante o desenvolvimento. Para o sincronismo do sistema foi utilizado o método gráfico descrito no Manual Brasileiro de Sinalização de Trânsito - Volume V. No qual apresenta como determinar os tempos e os ajustes para uma via de mão única. Na ausência de uma ferramenta para desenvolvimento específico do gráfico descrito acima, optou-se por desenvolvêlo em um software CAD, com as devidas adaptações.
+  Analisando o gráfico, podemos ver que os semáforos 2 e 4, 1 e 3 correspondem aos mesmos estados em função do tempo. Além disso, observa-se também que tanto o carro que chegará ao semáforo assim que o mesmo abrir cumprirá todo o percurso sem paradas. Também podemos ver que o mesmo fenômeno acontece para o veículo que chega ao final do sinal verde e início do amarelo, ao manter a velocidade de 40 km/h da via é observada a onda verde.
+  Assim, podemos descrever as transições para a síntese do controlador:
+  - Estágio 1-2: Manutenção do estado verde para os semáforos 1 e 3, mudança do amarelo para o vermelho nos semáforos 2 e 4;
+  - Estágio 2-3: Mudança do estado verde para amarelo nos semáforos 1 e 3, mudança do vermelho para o verde nos semáforos 2 e 4;
+  - Estágio 3-4: Mudança do estado amarelo para o vermelho nos semáforos 1 e 3, manutenção do estado verde nos semáforos 2 e 4;
+  - Estágio 4-1: Mudança do estado vermelho para o verde nos semáforos 1 e 3, mudança do estado verde para amarelo nos semáforos 2 e 4.
     
-  Além disso, consideramos que os estágios onde ocorrem o amarelo em algum dos semáforos são estados fundamentais para a segurança dos usuários, portanto, para que não ocorram erros, não sofreram alterações dos eventos não controláveis.   
-  Ainda temos eventos não controláveis, como os botões de travessia dos pedestres e o surgimento de veículos de emergência, que podem ser ativados nos seguites estágios:
-  - Botão S1:
-    - Estágio 4: Botão_S1 aciona a mudança de estágio 4-1;
-    - Estágio 2: Botão_S1 aciona a manutenção do estágio 2.
-  - Botão S2:
-    - Estágio 2: Botão_S2 aciona a mudança de estágio 2-3;
-    - Estágio 4: Botão_S2 aciona a manutenção do estágio 4.
-  - Emergência no semáforo 1:
-    - Estágio 2: Emergência_S1 aciona a mudança de estágio 2-3;
-    - Estágio 4: Emergência_S1 aciona a manutenção do estágio 4.
-  - Emergência no semáforo 2:
-    - Estágio 4: Emergência_S2 aciona a mudança de estágio 4-1;
-    - Estágio 2: Emergência_S2 aciona a manutenção do estágio 2.
+  Podemos extrair do gráfico também os tempos de cada transição, assim tempos:
+  - Estágio 1-2: 5s;
+  - Estágio 2-3: 26,5s;
+  - Estágio 3-4: 5s;
+  - Estágio 4-1: 26,5s.
       
 ## Construção dos Autômatos
 
- Com a topologia e os eventos controláveis ou não definidos podemos utilizar o software SUPREMICA para construção dos autômatos de acordo com o funcionamento estabelecidos. Criado um novo projeto e adicionando os eventos, podemos criar as 4 plantas necessárias. Assim temos: 
+ Com a topologia e os eventos definidos podemos utilizar o software UPPAAL para construção dos autômatos de acordo com o funcionamento estabelecido. Criado um novo projeto e adicionando os eventos, podemos criar as 4 templates necessários. Assim temos: 
  
- Autômato do semáforo 1:
+ Autômato do semáforo 1 e 3:
  ![automato S1](https://github.com/jhossgames/Projeto1SED/blob/main/Imagens/S1.png?raw=true)
  
- Autômato do semáforo de pedestres 1:
+ Autômato do semáforo 2 e 4:
  ![automato P1](https://github.com/jhossgames/Projeto1SED/blob/main/Imagens/P1.png?raw=true)
  
- Autômato do semáforo 2:
+ Controlador dos semáforos:
   ![automato S2](https://github.com/jhossgames/Projeto1SED/blob/main/Imagens/s2.png?raw=true)
   
-   Autômato do semáforo de pedestres 2:
+ Modelo da via:
  ![automato P2](https://github.com/jhossgames/Projeto1SED/blob/main/Imagens/P2.png?raw=true)
 
+ Após isso, podemos declarar nossas variáveis Globais:
 
-## Supervisor Sintetizado
-  Com todos as plantas executadas e com o correto funcionamento, podemos utilizar o software para criar o supervisor de forma automatizada. Assim temos:
+ Finalmente, podemos declarar nossos automatos e criar o sistema:
+
+
+## Análise com Verifier com lógica temporal
+  Além da utilização do simulador simbólico para o desenvolvimento e ajuste dos atributos, uma importante ferramenta do UPPAAL é o uso de lógica temporal para validar condições. Uma vez que com poucos estados um debug ou bugfix pode ser relativamente rápido, com o aumento dos estados e variáveis se faz necessário o uso de uma ferramenta como essa.
+  Foram aplicadas as seguintes equações ao modelo:
+  - E<> Stop==0;
+  - E<> Stop==1;
+  - E<> Stop>1;
+  - A[] not deadlock;
+  - E<>  carro1.Chegada;
+  - E<>  carro1.Parado1;
+  - E<>  sema1.Verde and sema3.Verde;
+  - E<>  sema2.Verde and sema4.Verde;
+  - E<>  sema1.Verde and sema2.Verde;
+  - E<>  sema1.Verde and carro1.Parado1.
+
+Assim, obtemos o seguinte resultado:
+  
+  Com todos os template executados executadas e com o correto funcionamento, podemos utilizar o software para criar o supervisor de forma automatizada. Assim temos:
   
 ![Supervisor Sintetizado](https://github.com/jhossgames/Projeto1SED/blob/main/Imagens/SUPERVISORIO.png?raw=true)
 
-  Podemos utilizar o Software para a simulação do supervisório, constatando-se o correto funcionamento do sistemas de semáforos.
-  Para a simulação, basta abrir o arquivo Projeto1_SED_Adson_Francisco.wmod no software SUPREMICA, recomenda-se abrir o arquivo diretamente pelo supremica.jar.
-  Para visualizar a simulação do supervisório:
+  Podemos utilizar o Software para a simulação sistema, constatando-se o correto funcionamento do sistemas de semáforos, o correto sincronismo e as verificações da lógica temporal.
+  Para a simulação, basta abrir o arquivo ZZZ no software UPPAAL, caso seu usuário do sistem operacional tenha carateres do UNICODE, você deve baixar a versão BETA do software.
+  Para visualizar a simulação do sistema:
 
   [![Veja a simulação](https://i.imgur.com/XllV2DE.png)](https://youtu.be/ni8EY2Vam8o)
-## Análise
-Uma importante ferramenta que o SUPREMICA fornece aos usuários é a possibilidade da verificação do sistema para saber se é não-bloqueante, controlável e outras demais opções. Após todo o desenvolvimento dos automatos e seu supervisor, foi verificado com sucesso que o autômato é controlável e não-bloqueante.
-![Verificação](https://github.com/jhossgames/Projeto1SED/blob/main/Imagens/verifica%C3%A7%C3%A3o.png?raw=true)
 
 ## Conclusão
-  Podemos concluir que a síntese de um automato supervisório para o controle de um cruzamento de semáforos através do software supremica, foi concluido com processo. Permitindo o tráfego seguro de todos os usuários e priorizando a passagem de veículos de emergência.
+  Podemos concluir que a construção do sistema para o controle de um uma via de 4 semáforos através do software UPPAAL, foi concluido com sucesso. Permitindo o tráfego seguro e eficiente para os usuários que precisam passar por esse trecho todod os dias.
 ## Licença
 
 Este projeto está licenciado sob a [Licença MIT](LICENSE). Consulte o arquivo `LICENSE` para obter detalhes.
