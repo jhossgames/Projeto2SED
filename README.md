@@ -4,7 +4,7 @@
 
 Este projeto busca desenvolver um sistema de onda verde de semáforos gerencie o fluxo de veículos, minimizando o tempo de espera e evitando congestionamentos no software UPPAAL, uma ferramenta para modelagem e análise de funções de controle de eventos discretos com base em modelos baseados em tempo. Como prioridade fundamental, o sistema foi pensado para garantir que , no trecho simulado, o usuário pare no máximo uma vez. 
 
-![Visão Geral](https://github.com/jhossgames/Projeto2SED/blob/main/Imagens/sistema%20geral.png?raw=true)
+![Visão Geral](https://github.com/jhossgames/Projeto2SED/blob/main/Imagens/GFN%20.png?raw=true)
 
 ## Funcionalidades
 
@@ -45,7 +45,7 @@ Este projeto busca desenvolver um sistema de onda verde de semáforos gerencie o
   ![Controlador dos semáforos](https://github.com/jhossgames/Projeto2SED/blob/main/Imagens/controlador.png?raw=true)
   
  Modelo da via:
- ![automato P2](https://github.com/jhossgames/Projeto2SED/blob/main/Imagens/via.png?raw=true)
+ ![automato Carro](https://github.com/jhossgames/Projeto2SED/blob/main/Imagens/ViaN.png?raw=true)
 
  Após isso, podemos declarar nossas variáveis Globais:
   ![Variáveis](https://github.com/jhossgames/Projeto2SED/blob/main/Imagens/variaveis.png?raw=true)
