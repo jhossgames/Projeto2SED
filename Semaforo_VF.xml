@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.6//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_6.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+broadcast chan t12,t23,t34,t41;
+clock geral;
+bool verde1=1,verde2=1;
+int Des = 0;
+int Stop = 0;
+int Start=0;
+
+
+
+    
+</declaration>
+	<template>
+		<name>Carro</name>
+		<declaration>clock y;</declaration>
+		<location id="id0" x="-825" y="-297">
+			<name x="-858" y="-331">Repouso</name>
+		</location>
+		<location id="id1" x="-697" y="-297">
+			<name x="-722" y="-331">Partida</name>
+			<label kind="invariant" x="-731" y="-280">Des&lt;=350</label>
+		</location>
+		<location id="id2" x="-518" y="-297">
+			<name x="-603" y="-331">Semaforo1</name>
+			<label kind="invariant" x="-552" y="-280">Des&lt;=350</label>
+		</location>
+		<location id="id3" x="-391" y="-297">
+			<name x="-374" y="-331">Liberado1</name>
+			<label kind="invariant" x="-425" y="-280">Des&lt;=700</label>
+		</location>
+		<location id="id4" x="-391" y="-425">
+			<name x="-399" y="-459">Parado1</name>
+		</location>
+		<location id="id5" x="-68" y="-425">
+			<name x="-76" y="-459">Parado2</name>
+		</location>
+		<location id="id6" x="-68" y="-297">
+			<name x="-51" y="-331">Liberado2</name>
+			<label kind="invariant" x="-102" y="-280">Des&lt;=1050</label>
+		</location>
+		<location id="id7" x="-195" y="-297">
+			<name x="-280" y="-331">Semaforo2</name>
+			<label kind="invariant" x="-229" y="-280">Des&lt;=700</label>
+		</location>
+		<location id="id8" x="-195" y="-178">
+			<name x="-203" y="-212">Parado3</name>
+		</location>
+		<location id="id9" x="-195" y="-50">
+			<name x="-280" y="-85">Liberado3</name>
+			<label kind="invariant" x="-229" y="-33">Des&lt;=1400</label>
+		</location>
+		<location id="id10" x="-68" y="-51">
+			<name x="-68" y="-85">Semaforo3</name>
+			<label kind="invariant" x="-102" y="-34">Des&lt;=1050</label>
+		</location>
+		<location id="id11" x="-518" y="-178">
+			<name x="-526" y="-212">Parado4</name>
+		</location>
+		<location id="id12" x="-518" y="-50">
+			<name x="-603" y="-85">Liberado4</name>
+			<label kind="invariant" x="-552" y="-33">Des&lt;=1750</label>
+		</location>
+		<location id="id13" x="-391" y="-51">
+			<name x="-391" y="-85">Semaforo4</name>
+			<label kind="invariant" x="-425" y="-34">Des&lt;=1400</label>
+		</location>
+		<location id="id14" x="-697" y="-51">
+			<name x="-731" y="-85">Chegada</name>
+		</location>
+		<init ref="id0"/>
+		<transition id="id15">
+			<source ref="id12"/>
+			<target ref="id14"/>
+			<label kind="guard" x="-637" y="-51">Des&gt;=1750</label>
+			<label kind="assignment" x="-629" y="-34">Start=0</label>
+		</transition>
+		<transition id="id16">
+			<source ref="id9"/>
+			<target ref="id13"/>
+			<label kind="guard" x="-331" y="-51">Des&gt;=1400</label>
+		</transition>
+		<transition id="id17">
+			<source ref="id6"/>
+			<target ref="id10"/>
+			<label kind="guard" x="68" y="-187">Des&gt;=1050</label>
+			<nail x="59" y="-297"/>
+			<nail x="59" y="-51"/>
+		</transition>
+		<transition id="id18">
+			<source ref="id3"/>
+			<target ref="id7"/>
+			<label kind="guard" x="-331" y="-297">Des&gt;=700</label>
+		</transition>
+		<transition id="id19">
+			<source ref="id4"/>
+			<target ref="id3"/>
+			<label kind="synchronisation" x="-382" y="-391">t41?</label>
+			<label kind="assignment" x="-382" y="-374">Start=1</label>
+		</transition>
+		<transition id="id20">
+			<source ref="id2"/>
+			<target ref="id4"/>
+			<label kind="guard" x="-527" y="-399">verde1==0</label>
+			<label kind="assignment" x="-569" y="-382">Stop++,Start=0</label>
+		</transition>
+		<transition id="id21">
+			<source ref="id2"/>
+			<target ref="id3"/>
+			<label kind="guard" x="-493" y="-314">verde1==1</label>
+		</transition>
+		<transition id="id22">
+			<source ref="id1"/>
+			<target ref="id2"/>
+			<label kind="guard" x="-646" y="-297">Des&gt;=350</label>
+		</transition>
+		<transition id="id23">
+			<source ref="id0"/>
+			<target ref="id1"/>
+			<label kind="assignment" x="-799" y="-297">Start=1</label>
+		</transition>
+		<transition id="id24">
+			<source ref="id5"/>
+			<target ref="id6"/>
+			<label kind="synchronisation" x="-59" y="-391">t23?</label>
+			<label kind="assignment" x="-59" y="-374">Start=1</label>
+		</transition>
+		<transition id="id25">
+			<source ref="id7"/>
+			<target ref="id5"/>
+			<label kind="guard" x="-204" y="-399">verde2==0</label>
+			<label kind="assignment" x="-246" y="-382">Stop++,Start=0</label>
+		</transition>
+		<transition id="id26">
+			<source ref="id7"/>
+			<target ref="id6"/>
+			<label kind="guard" x="-170" y="-314">verde2==1</label>
+		</transition>
+		<transition id="id27">
+			<source ref="id8"/>
+			<target ref="id9"/>
+			<label kind="synchronisation" x="-238" y="-144">t41?</label>
+			<label kind="assignment" x="-263" y="-127">Start=1</label>
+		</transition>
+		<transition id="id28">
+			<source ref="id10"/>
+			<target ref="id8"/>
+			<label kind="guard" x="-102" y="-161">verde1==0</label>
+			<label kind="assignment" x="-144" y="-144">Stop++,Start=0</label>
+		</transition>
+		<transition id="id29">
+			<source ref="id10"/>
+			<target ref="id9"/>
+			<label kind="guard" x="-170" y="-68">verde1==1</label>
+		</transition>
+		<transition id="id30">
+			<source ref="id11"/>
+			<target ref="id12"/>
+			<label kind="synchronisation" x="-561" y="-144">t41?</label>
+			<label kind="assignment" x="-586" y="-127">Start=1</label>
+		</transition>
+		<transition id="id31">
+			<source ref="id13"/>
+			<target ref="id11"/>
+			<label kind="guard" x="-425" y="-161">verde2==0</label>
+			<label kind="assignment" x="-467" y="-144">Stop++,Start=0</label>
+		</transition>
+		<transition id="id32">
+			<source ref="id13"/>
+			<target ref="id12"/>
+			<label kind="guard" x="-493" y="-68">verde2==1</label>
+		</transition>
+	</template>
+	<template>
+		<name>s1</name>
+		<parameter>bool &amp;verde</parameter>
+		<location id="id33" x="-161" y="-17" color="#00ff00">
+			<name x="-186" y="-51">Verde</name>
+		</location>
+		<location id="id34" x="25" y="-17" color="#ffff00">
+			<name x="-9" y="-51">Amarelo</name>
+		</location>
+		<location id="id35" x="-68" y="68" color="#ff0000">
+			<name x="-102" y="77">Vermelho</name>
+		</location>
+		<init ref="id33"/>
+		<transition id="id36">
+			<source ref="id35"/>
+			<target ref="id33"/>
+			<label kind="synchronisation" x="-161" y="17">t41?</label>
+			<label kind="assignment" x="-170" y="34">verde=1</label>
+		</transition>
+		<transition id="id37">
+			<source ref="id34"/>
+			<target ref="id35"/>
+			<label kind="synchronisation" x="-8" y="8">t34?</label>
+			<label kind="assignment" x="-8" y="25">verde=0</label>
+		</transition>
+		<transition id="id38">
+			<source ref="id33"/>
+			<target ref="id34"/>
+			<label kind="synchronisation" x="-85" y="-51">t23?</label>
+			<label kind="assignment" x="-102" y="-34">verde=1</label>
+		</transition>
+	</template>
+	<template>
+		<name>s2</name>
+		<parameter>bool &amp;verde</parameter>
+		<declaration>clock u;</declaration>
+		<location id="id39" x="-59" y="68" color="#ff0000">
+			<name x="-93" y="77">Vermelho</name>
+		</location>
+		<location id="id40" x="-144" y="-17" color="#00ff00">
+			<name x="-169" y="-51">Verde</name>
+		</location>
+		<location id="id41" x="25" y="-17" color="#ffff00">
+			<name x="-9" y="-51">Amarelo</name>
+		</location>
+		<init ref="id41"/>
+		<transition id="id42">
+			<source ref="id39"/>
+			<target ref="id40"/>
+			<label kind="synchronisation" x="-144" y="17">t23?</label>
+			<label kind="assignment" x="-153" y="34">verde=1</label>
+		</transition>
+		<transition id="id43">
+			<source ref="id41"/>
+			<target ref="id39"/>
+			<label kind="synchronisation" x="0" y="8">t12?</label>
+			<label kind="assignment" x="-17" y="25">verde=0</label>
+		</transition>
+		<transition id="id44">
+			<source ref="id40"/>
+			<target ref="id41"/>
+			<label kind="synchronisation" x="-85" y="-51">t41?</label>
+			<label kind="assignment" x="-102" y="-34">verde=1</label>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">controlador</name>
+		<declaration>// Place local declarations here.
+clock y;</declaration>
+		<location id="id45" x="323" y="-76">
+			<name x="313" y="-110">t1</name>
+		</location>
+		<location id="id46" x="739" y="-76">
+			<name x="729" y="-110">t2</name>
+		</location>
+		<location id="id47" x="739" y="119">
+			<name x="730" y="136">t3</name>
+		</location>
+		<location id="id48" x="323" y="119">
+			<name x="323" y="136">t4</name>
+		</location>
+		<init ref="id45"/>
+		<transition id="id49">
+			<source ref="id48"/>
+			<target ref="id45"/>
+			<label kind="guard" x="331" y="8">y&gt;=630</label>
+			<label kind="synchronisation" x="331" y="25">t41!</label>
+			<label kind="assignment" x="51" y="8">Start==1 ? Des=Des+295 : Des=Des,
+y=0</label>
+		</transition>
+		<transition id="id50">
+			<source ref="id47"/>
+			<target ref="id48"/>
+			<label kind="guard" x="518" y="93">y&gt;=365</label>
+			<label kind="synchronisation" x="535" y="76">t34!</label>
+			<label kind="assignment" x="416" y="119">Start==1 ? Des=Des+55 : Des=Des</label>
+		</transition>
+		<transition id="id51">
+			<source ref="id46"/>
+			<target ref="id47"/>
+			<label kind="guard" x="680" y="-8">y&gt;=315</label>
+			<label kind="synchronisation" x="697" y="8">t23!</label>
+			<label kind="assignment" x="748" y="0">Start==1 ? Des=Des+295 : Des=Des</label>
+		</transition>
+		<transition id="id52">
+			<source ref="id45"/>
+			<target ref="id46"/>
+			<label kind="guard" x="527" y="-76">y&gt;=50</label>
+			<label kind="synchronisation" x="536" y="-59">t12!</label>
+			<label kind="assignment" x="408" y="-127">Des&gt;1750 ? Des=0 : Des=Des,
+Start==1 ? Des=Des+55 : Des=Des</label>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+
+// List one or more processes to be composed into a system.
+//levando em consideração que o tempo para cada mudança de estado do semaforo seja tempo suficiente para o motorista andar 350 metros
+
+
+
+sema1= s1(verde1);
+sema2=s2(verde2);
+sema3=s1(verde1);
+sema4= s2(verde2);
+carro1=Carro();
+
+
+//o codigo pode ser expandido para diversos carros para a avenida basta apenas fazer,
+//carro2=Carro();
+
+
+controlador1= controlador();
+
+system controlador1, sema1,sema2,sema3,sema4, carro1;
+</system>
+	<queries>
+		<option key="--diagnostic" value="0"/>
+		<query>
+			<formula/>
+			<comment>Validação do sincronismo dos semáforos:</comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; Stop==0</formula>
+			<comment>Existe algum caminho que o número de paradas é 0?</comment>
+			<result outcome="success" type="quality" timestamp="2024-05-14 05:03:51 -0300">
+				<option key="--diagnostic" value="0"/>
+			</result>
+		</query>
+		<query>
+			<formula>E&lt;&gt; Stop==1</formula>
+			<comment>Existe algum caminho que o número de paradas é 1?</comment>
+			<result outcome="success" type="quality" timestamp="2024-05-14 05:04:22 -0300">
+				<option key="--diagnostic" value="0"/>
+			</result>
+		</query>
+		<query>
+			<formula>E&lt;&gt; Stop&gt;1</formula>
+			<comment>Existe algum caminho que o número de paradas é maior que 1?</comment>
+			<result outcome="failure" type="quality" timestamp="2024-05-14 05:05:03 -0300">
+				<option key="--diagnostic" value="0"/>
+			</result>
+		</query>
+		<query>
+			<formula/>
+			<comment>Verificão de Deadlock:</comment>
+		</query>
+		<query>
+			<formula>A[] not deadlock</formula>
+			<comment>O sistema é não bloqueante?</comment>
+			<result outcome="success" type="quality" timestamp="2024-05-14 05:06:08 -0300">
+				<option key="--diagnostic" value="0"/>
+			</result>
+		</query>
+		<query>
+			<formula/>
+			<comment>Propriedades de evolução do sistema:</comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt;  carro1.Chegada</formula>
+			<comment>Em algum momento o carro chega ao final?</comment>
+			<result outcome="success" type="quality" timestamp="2024-05-14 05:09:59 -0300">
+				<option key="--diagnostic" value="0"/>
+			</result>
+		</query>
+		<query>
+			<formula>E&lt;&gt;  carro1.Parado1</formula>
+			<comment>Existe algum caminho que o carro Para no primeiro sinal?</comment>
+			<result outcome="success" type="quality" timestamp="2024-05-14 05:11:47 -0300">
+				<option key="--diagnostic" value="0"/>
+			</result>
+		</query>
+		<query>
+			<formula>E&lt;&gt;  sema1.Verde and sema3.Verde</formula>
+			<comment>Os semáforos 1 e 3 estão sincronizados?
+</comment>
+			<result outcome="success" type="quality" timestamp="2024-05-14 05:17:31 -0300">
+				<option key="--diagnostic" value="0"/>
+			</result>
+		</query>
+		<query>
+			<formula>E&lt;&gt;  sema2.Verde and sema4.Verde</formula>
+			<comment>Os semáforos 2 e 4 estão sincronizados?</comment>
+			<result outcome="success" type="quality" timestamp="2024-05-14 05:19:05 -0300">
+				<option key="--diagnostic" value="0"/>
+			</result>
+		</query>
+		<query>
+			<formula>E&lt;&gt;  sema1.Verde and sema2.Verde</formula>
+			<comment>Os semáforos 1 e 2 estão sincronizados?</comment>
+			<result outcome="failure" type="quality" timestamp="2024-05-14 05:19:02 -0300">
+				<option key="--diagnostic" value="0"/>
+			</result>
+		</query>
+		<query>
+			<formula>E&lt;&gt;  sema1.Verde and carro1.Parado1</formula>
+			<comment>Há algum caminho que o semáforo 1 está verde e o carro está parado?</comment>
+			<result outcome="failure" type="quality" timestamp="2024-05-14 05:16:06 -0300">
+				<option key="--diagnostic" value="0"/>
+			</result>
+		</query>
+	</queries>
+</nta>
