@@ -37,6 +37,7 @@ Este projeto busca desenvolver um sistema de onda verde de semáforos gerencie o
  Autômato do semáforo 1 e 3:
  ![automato S1](https://github.com/jhossgames/Projeto2SED/blob/main/Imagens/S1.png?raw=true)
  
+ 
  Autômato do semáforo 2 e 4:
  ![automato S2](https://github.com/jhossgames/Projeto2SED/blob/main/Imagens/S2.png?raw=true)
  
